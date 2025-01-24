@@ -5,10 +5,9 @@ create table Myoffice
     address varchar(255),
 );
 
-CREATE PROCEDURE NEWSID @NewId INT OUTPUT
+alter PROCEDURE NEWSID @NewId INT OUTPUT
 AS
 BEGIN
-    SET NOCOUNT ON;
     SELECT @NewId = ISNULL(MAX(id), 0) + 1
     FROM Myoffice;
 END;
@@ -20,7 +19,7 @@ CREATE TABLE LogTable
     Data    NVARCHAR(MAX),
 );
 
-CREATE PROCEDURE WriteLog @Name NVARCHAR(255),
+CREATE PROCEDURE usp_AddLog @Name NVARCHAR(255),
                           @Data NVARCHAR(MAX)
 AS
 BEGIN
@@ -39,8 +38,12 @@ BEGIN
         address varchar(255),
     );
     
+    -- get new id
+    DECLARE @NewId INT;
+    EXEC NEWSID @NewId OUTPUT;
+    
     INSERT INTO #TempTable
-    SELECT id, name, address
+    SELECT @NewId, name, address
     FROM OPENJSON(@Json)
              WITH (
                  id INT,
@@ -54,7 +57,7 @@ BEGIN
     SELECT id, name, address
     FROM #TempTable;
     
-    Exec WriteLog 'CreateMyoffice', @Json;
+    Exec usp_AddLog 'CreateMyoffice', @Json;
 END;
 
 CREATE PROCEDURE GetMyoffice @Json NVARCHAR(MAX) OUTPUT
@@ -65,7 +68,7 @@ BEGIN
                     FOR JSON AUTO);
 END;
 
-create PROCEDURE UpdateMyoffice @Json NVARCHAR(MAX)
+alter PROCEDURE UpdateMyoffice @Json NVARCHAR(MAX)
 AS
 BEGIN
     -- check exist
@@ -88,10 +91,10 @@ BEGIN
                                      address NVARCHAR(255)
                                      ) t ON m.id = t.id;
     
-    Exec WriteLog 'UpdateMyoffice', @Json;
+    Exec usp_AddLog 'UpdateMyoffice', @Json;
 END;
 
-CREATE PROCEDURE DeleteMyoffice @Json NVARCHAR(MAX)
+alter PROCEDURE DeleteMyoffice @Json NVARCHAR(MAX)
 AS
 BEGIN
     IF NOT EXISTS (SELECT id
@@ -105,5 +108,5 @@ BEGIN
 
     DELETE FROM Myoffice WHERE id IN (SELECT id FROM OPENJSON(@Json) WITH (id INT));
     
-    Exec WriteLog 'DeleteMyoffice', @Json;
+    Exec usp_AddLog 'DeleteMyoffice', @Json;
 END;
