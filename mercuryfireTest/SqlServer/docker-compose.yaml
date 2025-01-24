@@ -1,0 +1,15 @@
+﻿
+services:
+  sql-server:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    restart: always
+    ports:
+      - "1433:1433"
+    volumes:
+      - ./storage:/var/opt/mssql
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_ENABLE_HADR: "1"
+      MSSQL_AGENT_ENABLED: "1"
+      MSSQL_SA_PASSWORD: "mercuryfire@123"
+      MSSQL_PID: "Express"
