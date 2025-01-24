@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mercuryfireTest", "mercuryfireTest\mercuryfireTest.csproj", "{8A62A756-A91B-4CFE-99AB-9C0E8065BD0C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8A62A756-A91B-4CFE-99AB-9C0E8065BD0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A62A756-A91B-4CFE-99AB-9C0E8065BD0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A62A756-A91B-4CFE-99AB-9C0E8065BD0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A62A756-A91B-4CFE-99AB-9C0E8065BD0C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
